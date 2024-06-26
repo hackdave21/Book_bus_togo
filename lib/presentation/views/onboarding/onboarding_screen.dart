@@ -22,11 +22,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Image.asset('assets/logo.png'),
+            Image.asset('assets/bus.png', color: AppTheme.secondaryColor,),
+            Row(children: [
+              Text(
+                "BookBusTogo",
+                style: AppTheme().stylish1(25, AppTheme.secondaryColor, isBold: true),
+              ),
+            ],),
             Center(
               child: Text(
                 "Bienvenue",
-                style: AppTheme().stylish2(15, AppTheme.white, isBold: true),
+                style: AppTheme().stylish2(15, AppTheme.secondaryColor, isBold: true),
               ),
             ),
           ],
