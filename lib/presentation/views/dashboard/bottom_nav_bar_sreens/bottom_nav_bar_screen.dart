@@ -57,7 +57,7 @@ class _MyButtomNavBarState extends State<MyBottomNavBar> {
                   myCurrentIndex = index;
                 });
               },
-              items: [
+              items: const [
                 BottomNavigationBarItem(
                     icon: Icon(Icons.home), label: "Maison"),
                 BottomNavigationBarItem(
