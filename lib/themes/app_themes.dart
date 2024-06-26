@@ -5,8 +5,8 @@ class AppTheme {
 static const Color primaryColor = Color(0xFFF6F8FA);
 static const Color secondaryColor = Color(0xFF00545C);
   static const Color black = Colors.black;
-  static const Color white = Colors.white;
-  static  Color? grey = Colors.grey[300];
+  static const Color white = Color.fromRGBO(255, 255, 255, 1);
+  static  const Color grey = Color(0xFFFD4DAE1) ;
 
   static const String fontFamilyLato = "Lato";
   static const String fontFamilyQuick = "Quicksand";
