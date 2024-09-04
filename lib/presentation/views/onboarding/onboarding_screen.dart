@@ -1,5 +1,6 @@
 
 import 'package:book_bus_togo/core/utils/app_helpers.dart';
+import 'package:book_bus_togo/presentation/views/dashboard/bottom_nav_bar_sreens/bottom_nav_bar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -19,7 +20,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 5), () {
-        Navigator.pushReplacementNamed(context, '/Bottomnavbar'); 
+      Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => const BottomNavBarScreen()),
+);
+
       });
     });
   }
@@ -27,25 +32,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: AppTheme.primaryColor,
+        color: AppTheme.background,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Padding(
               padding: const EdgeInsets.all(25),
               child: Row(children: [
-                Image.asset('assets/bus.png', color: AppTheme.secondaryColor, width: 100, height: 100,),
+                Image.asset('assets/bus.png', color: AppTheme.primaryColor, width: 100, height: 100,),
                 AppHelpers.getSpacerWidth(1),
                 Text(
                   "BookBusTogo",
-                  style: AppTheme().stylish1(35, AppTheme.secondaryColor, isBold: true),
+                  style: AppTheme().stylish1(29, AppTheme.primaryColor, isBold: true),
                 ),
               ],),
             ),
             Center(
               child: Text(
                 "Bienvenue",
-                style: AppTheme().stylish2(15, AppTheme.secondaryColor, isBold: true),
+                style: AppTheme().stylish2(15, AppTheme.primaryColor, isBold: true),
               ),
             ),
           ],
