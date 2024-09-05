@@ -7,12 +7,14 @@ import 'package:heroicons/heroicons.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _selectedFilter = 'Les plus récentes';
+
+    String _selectedFilter = 'Les plus récentes';
 
   void _showFilterDialog() {
     showDialog(
