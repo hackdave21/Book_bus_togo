@@ -10,33 +10,46 @@ class AnnonceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
+    return  Padding(
+      padding: const EdgeInsets.all(4),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3), 
+            ),
+          ],
+          color: Colors.white, 
+        ),
         child: Column(
           children: [
-            Container(
-              height: 200,
-              color: Colors.grey[300],
-              child: const Center(
-                child: Text(
-                  "400 x 200",
-                  style: TextStyle(color: Colors.grey),
-                ),
+            Padding(
+              padding: const EdgeInsets.all(7),
+              child: Container(
+                width: double.infinity,
+                height: context.heightPercent(13),
+                decoration:  BoxDecoration(color: AppTheme.inContainerColor, borderRadius: BorderRadius.circular(15)),
+                child: const Center(child: Text("200 x 100")),
               ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              description,
-              style: AppTheme().stylish2(16, Colors.black, isBold: false),
-              textAlign: TextAlign.center,
+             Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Détails du ticket de transport : Bus 101 - Départ à 09:00 AM",
+               style: AppTheme().stylish1(15, AppTheme.black),
+                textAlign: TextAlign.center,
+              ),
             ),
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            const Spacer(),
+           Padding(
+             padding: const EdgeInsets.all(7),
+             child: Row(
               children: [
-                InkWell(
+                   InkWell(
               onTap: () {},
                child: Container(
                 width: double.infinity,
@@ -62,7 +75,8 @@ class AnnonceCard extends StatelessWidget {
                ),
              ),
               ],
-            ),
+             )
+           )
           ],
         ),
       ),
