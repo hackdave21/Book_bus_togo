@@ -1,4 +1,5 @@
 
+import 'package:book_bus_togo/data/datasources/annonce_data.dart';
 import 'package:book_bus_togo/presentation/views/dashboard/bottom_nav_bar_sreens/home_screens/widgets/annonce_cart.dart';
 import 'package:book_bus_togo/themes/app_themes.dart';
 import 'package:flutter/material.dart';
@@ -116,9 +117,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: ListView.builder(
         physics: const BouncingScrollPhysics(),
-        itemCount: 5,
+        itemCount: annonces.length,
         itemBuilder: (context, index) {
-          return const AnnonceCart();
+          return  AnnonceCart(annonce: annonces[index],);
         },
       ),
     );

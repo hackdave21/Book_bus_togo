@@ -67,8 +67,8 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           color: AppTheme.white,
           tabs: const [
             GButton(
-              icon: Icons.home,
-              text: 'Home',
+              icon: Icons.new_releases_sharp,
+              text: 'New',
             ),
             GButton(
               icon: Icons.confirmation_number,

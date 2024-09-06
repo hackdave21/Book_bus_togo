@@ -1,10 +1,13 @@
+import 'package:book_bus_togo/domain/entities/transport_company.dart';
+import 'package:book_bus_togo/presentation/views/dashboard/bottom_nav_bar_sreens/ticket_screens/reservation_screen.dart';
 import 'package:book_bus_togo/presentation/views/dashboard/shimmers/shimmers_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:book_bus_togo/themes/app_themes.dart';
 import 'package:book_bus_togo/core/utils/screen_size.dart';
 
 class TicketCard extends StatefulWidget {
-  const TicketCard({super.key});
+  final TransportCompany transportCompany;
+  const TicketCard({super.key, required this.transportCompany});
 
   @override
   State<TicketCard> createState() => _TicketCardState();
@@ -59,7 +62,7 @@ class _TicketCardState extends State<TicketCard> {
                       ),
                       child:ClipRRect(
                         borderRadius: BorderRadius.circular(15),
-                        child: Image.asset('assets/logonagode.jpg', fit: BoxFit.fill)),
+                        child: Image.asset(widget.transportCompany.logoPath, fit: BoxFit.fill)),
                     ),
             ),
             Padding(
@@ -70,7 +73,7 @@ class _TicketCardState extends State<TicketCard> {
                       height: context.heightPercent(3),
                     )
                   : Text(
-                      "NAGODE TRANSFERT",
+                       widget.transportCompany.name,
                       style: AppTheme().stylish1(15, AppTheme.black),
                       textAlign: TextAlign.center,
                     ),
@@ -85,7 +88,12 @@ class _TicketCardState extends State<TicketCard> {
                       borderRadius: BorderRadius.circular(15),
                     )
                   : InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ReservationScreen(transportCompany: widget.transportCompany,)),
+        );
+                      },
                       child: Container(
                         width: double.infinity,
                         height: context.heightPercent(6),

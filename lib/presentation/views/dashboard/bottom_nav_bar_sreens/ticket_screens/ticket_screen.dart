@@ -1,4 +1,5 @@
 //import 'package:book_bus_togo/core/utils/screen_size.dart';
+import 'package:book_bus_togo/data/datasources/transport_company_data.dart';
 import 'package:book_bus_togo/presentation/views/dashboard/bottom_nav_bar_sreens/ticket_screens/widgets/ticket_card.dart';
 import 'package:book_bus_togo/themes/app_themes.dart';
 import 'package:flutter/material.dart';
@@ -49,9 +50,9 @@ class TicketScreen extends StatelessWidget {
                   mainAxisSpacing: 8,
                   childAspectRatio: 2 / 3,
                 ),
-                itemCount: 10,
+                itemCount: transportCompanies.length,
                 itemBuilder: (context, index) {
-                  return const TicketCard();
+                  return TicketCard(transportCompany: transportCompanies[index]);
                 },
               ),
             ),

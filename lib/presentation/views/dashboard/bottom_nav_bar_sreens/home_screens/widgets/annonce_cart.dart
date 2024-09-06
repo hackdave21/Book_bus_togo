@@ -1,4 +1,5 @@
 import 'package:book_bus_togo/core/utils/screen_size.dart';
+import 'package:book_bus_togo/domain/entities/annonce.dart';
 import 'package:book_bus_togo/presentation/views/dashboard/shimmers/shimmers_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
@@ -6,7 +7,9 @@ import 'package:heroicons/heroicons.dart';
 import '../../../../../../themes/app_themes.dart';
 
 class AnnonceCart extends StatefulWidget {
-  const AnnonceCart({super.key});
+
+  final Annonce annonce;
+  const  AnnonceCart({super.key, required this.annonce});
 
   @override
   State<AnnonceCart> createState() => _AnnonceCartState();
@@ -63,7 +66,7 @@ class _AnnonceCartState extends State<AnnonceCart> {
                           color: AppTheme.inContainerColor),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
-                        child: Image.asset('assets/annoncenagode.jpg', fit: BoxFit.fill)),
+                        child: Image.asset(widget.annonce.imagePath, fit: BoxFit.fill)),
                     ),
               SizedBox(height: context.heightPercent(0.5)),
 
@@ -73,11 +76,11 @@ class _AnnonceCartState extends State<AnnonceCart> {
                       height: context.heightPercent(3),
                     )
                   : Text(
-                      'Ceci est une description de l\'annonce...',
+                      widget.annonce.description,
                       style: AppTheme().stylish2(14, AppTheme.black),
                     ),
 
-              SizedBox(height: context.heightPercent(5.5)),
+              SizedBox(height: context.heightPercent(3)),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,12 +102,18 @@ class _AnnonceCartState extends State<AnnonceCart> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   const HeroIcon(
                                     HeroIcons.handThumbUp,
                                     color: AppTheme.white,
                                   ),
-                                  Text("J'aime",
+                                   Container(
+                                    height: context.heightPercent(2),
+                                    width: context.widthPercent(0.3),
+                                    color: AppTheme.white,
+                                  ),
+                                  Text(widget.annonce.likes.toString(),
                                       style: AppTheme().stylish2(
                                           15, AppTheme.white,
                                           isBold: true)),
@@ -130,12 +139,18 @@ class _AnnonceCartState extends State<AnnonceCart> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   const HeroIcon(
                                     HeroIcons.handThumbDown,
                                     color: AppTheme.white,
                                   ),
-                                  Text("Je n'aime pas",
+                                  Container(
+                                    height: context.heightPercent(2),
+                                    width: context.widthPercent(0.3),
+                                    color: AppTheme.white,
+                                  ),
+                                  Text(widget.annonce.dislikes.toString(),
                                       style: AppTheme().stylish2(
                                           15, AppTheme.white,
                                           isBold: true)),
