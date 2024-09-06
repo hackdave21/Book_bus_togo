@@ -56,18 +56,16 @@ class _AnnonceCartState extends State<AnnonceCart> {
                       borderRadius: BorderRadius.circular(15),
                     )
                   : Container(
-                      height: context.heightPercent(22),
+                      height: context.heightPercent(25),
                       width: double.infinity,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: AppTheme.inContainerColor),
-                      child: const Icon(
-                        Icons.image,
-                        size: 50,
-                        color: AppTheme.white,
-                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.asset('assets/annoncenagode.jpg', fit: BoxFit.fill)),
                     ),
-              SizedBox(height: context.heightPercent(1)),
+              SizedBox(height: context.heightPercent(0.5)),
 
               isLoading
                   ? ShimmerWidget(
@@ -79,7 +77,7 @@ class _AnnonceCartState extends State<AnnonceCart> {
                       style: AppTheme().stylish2(14, AppTheme.black),
                     ),
 
-              SizedBox(height: context.heightPercent(7)),
+              SizedBox(height: context.heightPercent(5.5)),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

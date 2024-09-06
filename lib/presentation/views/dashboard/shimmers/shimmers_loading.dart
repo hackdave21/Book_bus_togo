@@ -22,7 +22,7 @@ class ShimmerWidget extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: Colors.grey,
+          color: const Color(0xFFB7DEFF),
           borderRadius: borderRadius ?? BorderRadius.circular(0),
         ),
       ),

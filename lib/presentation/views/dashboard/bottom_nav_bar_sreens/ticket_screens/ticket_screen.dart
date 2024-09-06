@@ -41,6 +41,7 @@ class TicketScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: GridView.builder(
+                physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,

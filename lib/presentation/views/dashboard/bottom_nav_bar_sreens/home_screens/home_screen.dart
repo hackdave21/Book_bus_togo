@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 10),
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.7),
+                        //color: Colors.grey.withOpacity(0.7),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Padding(
@@ -115,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: ListView.builder(
+        physics: const BouncingScrollPhysics(),
         itemCount: 5,
         itemBuilder: (context, index) {
           return const AnnonceCart();

@@ -52,12 +52,14 @@ class _TicketCardState extends State<TicketCard> {
                     )
                   : Container(
                       width: double.infinity,
-                      height: context.heightPercent(13),
+                      height: context.heightPercent(16),
                       decoration: BoxDecoration(
-                        color: AppTheme.inContainerColor,
+                        color: Colors.grey.shade100,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: const Center(child: Text("200 x 100")),
+                      child:ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.asset('assets/logonagode.jpg', fit: BoxFit.fill)),
                     ),
             ),
             Padding(
@@ -68,12 +70,12 @@ class _TicketCardState extends State<TicketCard> {
                       height: context.heightPercent(3),
                     )
                   : Text(
-                      "Détails du ticket de transport : Bus 101 - Départ à 09:00 AM",
+                      "NAGODE TRANSFERT",
                       style: AppTheme().stylish1(15, AppTheme.black),
                       textAlign: TextAlign.center,
                     ),
             ),
-            const Spacer(),
+            SizedBox(height: context.heightPercent(1),),
             Padding(
               padding: const EdgeInsets.all(7),
               child: isLoading

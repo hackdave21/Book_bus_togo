@@ -1,9 +1,8 @@
-
+import 'dart:async';
 import 'package:book_bus_togo/core/utils/app_helpers.dart';
 import 'package:book_bus_togo/presentation/views/dashboard/bottom_nav_bar_sreens/bottom_nav_bar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-
 import '../../../themes/app_themes.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -15,19 +14,28 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+  bool showWelcomeText = true;
+
   @override
- void initState() {
+  void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 5), () {
-      Navigator.push(
-  context,
-  MaterialPageRoute(builder: (context) => const BottomNavBarScreen()),
-);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const BottomNavBarScreen()),
+        );
+      });
+    });
 
+    // Après 3 secondes, changer l'état pour afficher les points de chargement
+    Timer(const Duration(seconds: 3), () {
+      setState(() {
+        showWelcomeText = false;
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,20 +46,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.all(25),
-              child: Row(children: [
-                Image.asset('assets/bus.png', color: AppTheme.primaryColor, width: 100, height: 100,),
-                AppHelpers.getSpacerWidth(1),
-                Text(
-                  "BookBusTogo",
-                  style: AppTheme().stylish1(29, AppTheme.primaryColor, isBold: true),
-                ),
-              ],),
+              child: Row(
+                children: [
+                  Image.asset(
+                    'assets/bus.png',
+                    color: AppTheme.primaryColor,
+                    width: 100,
+                    height: 100,
+                  ),
+                  AppHelpers.getSpacerWidth(1),
+                  Text(
+                    "Circle",
+                    style: AppTheme()
+                        .stylish1(29, AppTheme.primaryColor, isBold: true),
+                  ),
+                ],
+              ),
             ),
             Center(
-              child: Text(
-                "Bienvenue",
-                style: AppTheme().stylish2(15, AppTheme.primaryColor, isBold: true),
-              ),
+              child: showWelcomeText
+                  ? Text(
+                      "Bienvenue",
+                      style: AppTheme().stylish2(15, AppTheme.primaryColor,
+                          isBold: true),
+                    )
+                  : const CircularProgressIndicator( color: AppTheme.primaryColor,), 
             ),
           ],
         ),

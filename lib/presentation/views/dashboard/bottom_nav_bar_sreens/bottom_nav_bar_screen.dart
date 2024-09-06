@@ -5,7 +5,6 @@ import 'package:book_bus_togo/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({super.key});
 
@@ -15,18 +14,44 @@ class BottomNavBarScreen extends StatefulWidget {
 
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _selectedIndex = 0;
-  
-  final List<Widget> _pages = [
-    const HomeScreen(),
-    const TicketScreen(),
-    const ProfileScreen(),
-  ];
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onPageChanged(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  void _onItemTapped(int index) {
+    _pageController.jumpToPage(index);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.background,
-      body: _pages[_selectedIndex],
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+        physics: const BouncingScrollPhysics(),
+        children: const  [
+          HomeScreen(),
+          TicketScreen(),
+          ProfileScreen(),
+        ], 
+      ),
       bottomNavigationBar: Container(
         color: AppTheme.primaryColor,
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
@@ -55,11 +80,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
             ),
           ],
           selectedIndex: _selectedIndex,
-          onTabChange: (index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-          },
+          onTabChange: _onItemTapped, 
         ),
       ),
     );
