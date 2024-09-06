@@ -28,7 +28,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       });
     });
 
-    // Après 3 secondes, changer l'état pour afficher les points de chargement
     Timer(const Duration(seconds: 3), () {
       setState(() {
         showWelcomeText = false;
