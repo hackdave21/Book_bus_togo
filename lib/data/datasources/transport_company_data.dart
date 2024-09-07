@@ -10,5 +10,19 @@ final List<TransportCompany> transportCompanies = [
     logoPath: 'assets/solimlogo.png',
     name: 'SOLIM SEROU TRANSPORT',
   ),
-  
+  TransportCompany(
+    logoPath: 'assets/solimlogo.png',
+    name: 'SOLIM SEROU TRANSPORT',
+  ),TransportCompany(
+    logoPath: 'assets/solimlogo.png',
+    name: 'SOLIM SEROU TRANSPORT',
+  ),
+    TransportCompany(
+    logoPath: 'assets/logonagode.jpg',
+    name: 'NAGODE TRANSFERT',
+  ),
+    TransportCompany(
+    logoPath: 'assets/logonagode.jpg',
+    name: 'NAGODE TRANSFERT',
+  ),
 ];

@@ -55,7 +55,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   AppHelpers.getSpacerWidth(1),
                   Text(
-                    "Circle",
+                    "BookBusTogo",
                     style: AppTheme()
                         .stylish1(29, AppTheme.primaryColor, isBold: true),
                   ),

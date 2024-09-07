@@ -35,9 +35,9 @@ class _TicketCardState extends State<TicketCard> {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withOpacity(0.2),
               spreadRadius: 2,
-              blurRadius: 5,
+              blurRadius: 10,
               offset: const Offset(0, 3),
             ),
           ],
@@ -66,50 +66,63 @@ class _TicketCardState extends State<TicketCard> {
                     ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: isLoading
-                  ? ShimmerWidget(
-                      width: context.widthPercent(80),
-                      height: context.heightPercent(3),
-                    )
-                  : Text(
-                       widget.transportCompany.name,
-                      style: AppTheme().stylish1(15, AppTheme.black),
-                      textAlign: TextAlign.center,
-                    ),
-            ),
-            SizedBox(height: context.heightPercent(1),),
-            Padding(
-              padding: const EdgeInsets.all(7),
-              child: isLoading
-                  ? ShimmerWidget(
-                      width: double.infinity,
-                      height: context.heightPercent(6),
-                      borderRadius: BorderRadius.circular(15),
-                    )
-                  : InkWell(
-                      onTap: () {
-                        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ReservationScreen(transportCompany: widget.transportCompany,)),
-        );
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: context.heightPercent(6),
-                        decoration: BoxDecoration(
-                          color: AppTheme.primaryColor,
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: Container(
+                 decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        child: Center(
-                          child: Text(
-                            'Reserver',
-                            style: AppTheme()
-                                .stylish2(15, AppTheme.white, isBold: true),
+                child: Column(
+                  children: [
+                    Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: isLoading
+                    ? ShimmerWidget(
+                        width: context.widthPercent(80),
+                        height: context.heightPercent(3),
+                      )
+                    : Text(
+                         widget.transportCompany.name,
+                        style: AppTheme().stylish1(15, AppTheme.black),
+                        textAlign: TextAlign.center,
+                      ),
+              ),
+              SizedBox(height: context.heightPercent(1),),
+              Padding(
+                padding: const EdgeInsets.all(7),
+                child: isLoading
+                    ? ShimmerWidget(
+                        width: double.infinity,
+                        height: context.heightPercent(6),
+                        borderRadius: BorderRadius.circular(15),
+                      )
+                    : InkWell(
+                        onTap: () {
+                          Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ReservationScreen(transportCompany: widget.transportCompany,)),
+                      );
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: context.heightPercent(6),
+                          decoration: BoxDecoration(
+                            color: AppTheme.primaryColor,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Reserver',
+                              style: AppTheme()
+                                  .stylish2(15, AppTheme.white, isBold: true),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+              )
+                  ],
+                ),
+              ),
             )
           ],
         ),

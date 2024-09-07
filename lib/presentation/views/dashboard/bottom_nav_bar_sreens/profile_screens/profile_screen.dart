@@ -1,6 +1,7 @@
 
 import 'package:book_bus_togo/core/utils/screen_size.dart';
 import 'package:book_bus_togo/core/utils/text_size.dart';
+import 'package:book_bus_togo/presentation/views/dashboard/bottom_nav_bar_sreens/profile_screens/settings/historic_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:image_picker/image_picker.dart';
@@ -199,13 +200,33 @@ class _ProfileScreenState extends State<ProfileScreen>
             Container(
               // height: context.heightPercent(43),
               decoration: BoxDecoration(
-                color: AppTheme.white,
+                color: Colors.grey.shade100,
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Padding(
                 padding: EdgeInsets.all(context.heightPercent(2)),
                 child: Column(
                   children: [
+                     ListTile(
+                      leading: const HeroIcon(HeroIcons.language),
+                      title: Text('Historique',
+                          style:
+                              AppTheme().stylish1(context.p1, AppTheme.black)),
+                      onTap: () {
+                          Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const HistoricScreen()),
+                      );
+                      },
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: context.heightPercent(0.2),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
                     ListTile(
                       leading: HeroIcon(isNotificationEnabled
                           ? HeroIcons.bellAlert
