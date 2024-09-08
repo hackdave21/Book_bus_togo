@@ -16,27 +16,76 @@ class PersonalInfoForm extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Veuillez remplir votre nom et prénom", style:  AppTheme().stylish1(17, AppTheme.primaryColor, isBold: true)),
-            SizedBox(height: context.heightPercent(5),),
-            _buildTextField(label: 'Nom'),
-            _buildTextField(label: 'Prénom'),
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text("Veuillez remplir votre nom et prénom", style:  AppTheme().stylish1(17, AppTheme.primaryColor, isBold: true)),
+            ),
+            SizedBox(height: context.heightPercent(1),),
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text("Nom", style:  AppTheme().stylish1(15, AppTheme.black, isBold: true)),
+            ),
+            _buildTextField(hintext: 'Ex. ABALO'),
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text("Prénom", style:  AppTheme().stylish1(15, AppTheme.black, isBold: true)),
+            ),
+            _buildTextField(hintext: 'Ex. John'),
+             Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text("Numéro de téléphone", style:  AppTheme().stylish1(15, AppTheme.black, isBold: true)),
+            ),
+            _buildTextField(hintext: 'Ex. 90 90 90 90'),
+             Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text("Agence de départ", style:  AppTheme().stylish1(15, AppTheme.black, isBold: true)),
+            ),
+          _buildDropdownField(hintext: 'Ville 1', items: ['Ville 1', 'Ville 2']),
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Text("Agence d'arrivée", style:  AppTheme().stylish1(15, AppTheme.black, isBold: true)),
+          ),
+          _buildDropdownField(hintext: 'Ville 1', items: ['Ville 1', 'Ville 2']),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTextField({required String label}) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextField(
-          decoration: InputDecoration(
-            labelText: label,
-            border: const OutlineInputBorder(),
+  Widget _buildTextField({required String hintext}) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          TextFormField(
+            decoration: InputDecoration(
+              hintText:  hintext,
+              hintStyle: AppTheme().stylish1(15, Colors.grey, isBold: true),
+              border: const OutlineInputBorder(),
+            ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDropdownField({required String hintext, required List<String> items}) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          hintText: hintext,
+          border: const OutlineInputBorder(),
         ),
+        items: items.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (newValue) {},
       ),
     );
   }

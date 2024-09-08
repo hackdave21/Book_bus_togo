@@ -18,7 +18,7 @@ class ReservationScreen extends StatefulWidget {
 }
 
 class _ReservationScreenState extends State<ReservationScreen> {
-  int _currentStep = 2;
+  int _currentStep = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: const HeroIcon(HeroIcons.arrowLeft, color: AppTheme.white,),
+          child: const HeroIcon(HeroIcons.arrowLeftCircle, color: AppTheme.white,),
         ),
         backgroundColor: AppTheme.primaryColor,
         title: Text(widget.transportCompany.name, style: AppTheme().stylish1(18, AppTheme.white, isBold: true), ),
@@ -46,11 +46,11 @@ class _ReservationScreenState extends State<ReservationScreen> {
                 _buildStepContainer("3. Paiement", _currentStep == 3, 3),
               ],
             ),
-             SizedBox(height:context.heightPercent(5)),
+             SizedBox(height:context.heightPercent(1)),
             Expanded(
               child: _buildForm(),
             ),
-             SizedBox(height:context.heightPercent(5)),
+             SizedBox(height:context.heightPercent(1)),
             NavigationButtons(
               showNext: _currentStep < 3,
               showPrev: _currentStep > 1,
