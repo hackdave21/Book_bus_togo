@@ -29,11 +29,14 @@ class TicketScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
               decoration: InputDecoration(
+                filled: true,
+                fillColor: AppTheme.white,
                 hintStyle: AppTheme().stylish2(15, Colors.grey, isBold: true),
                 hintText: "Rechercher un ticket...",
                 prefixIcon: const HeroIcon(HeroIcons.magnifyingGlass),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(30),
                 ),
               ),
             ),

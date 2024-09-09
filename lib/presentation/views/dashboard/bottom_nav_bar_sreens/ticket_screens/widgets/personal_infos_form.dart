@@ -14,41 +14,34 @@ class PersonalInfoForm extends StatelessWidget {
                       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Text("Veuillez remplir votre nom et prénom", style:  AppTheme().stylish1(17, AppTheme.primaryColor, isBold: true)),
-            ),
-            SizedBox(height: context.heightPercent(1),),
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Text("Nom", style:  AppTheme().stylish1(15, AppTheme.black, isBold: true)),
-            ),
-            _buildTextField(hintext: 'Ex. ABALO'),
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Text("Prénom", style:  AppTheme().stylish1(15, AppTheme.black, isBold: true)),
-            ),
-            _buildTextField(hintext: 'Ex. John'),
-             Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Text("Numéro de téléphone", style:  AppTheme().stylish1(15, AppTheme.black, isBold: true)),
-            ),
-            _buildTextField(hintext: 'Ex. 90 90 90 90'),
-             Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Text("Agence de départ", style:  AppTheme().stylish1(15, AppTheme.black, isBold: true)),
-            ),
-          _buildDropdownField(hintext: 'Ville 1', items: ['Ville 1', 'Ville 2']),
-          Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: Text("Agence d'arrivée", style:  AppTheme().stylish1(15, AppTheme.black, isBold: true)),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Text("Veuillez remplir tous les champs", style:  AppTheme().stylish1(17, AppTheme.primaryColor, isBold: true)),
+              ),
+              SizedBox(height: context.heightPercent(1),),
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Text("Nom", style:  AppTheme().stylish1(15, AppTheme.black, isBold: true)),
+              ),
+              _buildTextField(hintext: 'Ex. ABALO'),
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Text("Prénom", style:  AppTheme().stylish1(15, AppTheme.black, isBold: true)),
+              ),
+              _buildTextField(hintext: 'Ex. John'),
+               Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Text("Numéro de téléphone", style:  AppTheme().stylish1(15, AppTheme.black, isBold: true)),
+              ),
+              _buildTextField(hintext: 'Ex. 90 90 90 90'),
+              
+            ],
           ),
-          _buildDropdownField(hintext: 'Ville 1', items: ['Ville 1', 'Ville 2']),
-          ],
         ),
       ),
     );
@@ -63,7 +56,12 @@ class PersonalInfoForm extends StatelessWidget {
             decoration: InputDecoration(
               hintText:  hintext,
               hintStyle: AppTheme().stylish1(15, Colors.grey, isBold: true),
-              border: const OutlineInputBorder(),
+              border:  OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: AppTheme.white
             ),
           ),
         ],
@@ -71,22 +69,5 @@ class PersonalInfoForm extends StatelessWidget {
     );
   }
 
-  Widget _buildDropdownField({required String hintext, required List<String> items}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-          hintText: hintext,
-          border: const OutlineInputBorder(),
-        ),
-        items: items.map((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        onChanged: (newValue) {},
-      ),
-    );
-  }
+
 }

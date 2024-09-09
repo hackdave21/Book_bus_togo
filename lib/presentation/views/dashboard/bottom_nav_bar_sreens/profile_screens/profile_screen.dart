@@ -23,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   late final Animation<double> _rotationAnimation;
   // ignore: unused_field
   final bool _isRotated = false;
- final String imageUrl = 'assets/user.png';
+ final String imageUrl = 'assets/pp.jpg';
   final ImagePicker _picker = ImagePicker();
   // ignore: unused_field
   XFile? _image;

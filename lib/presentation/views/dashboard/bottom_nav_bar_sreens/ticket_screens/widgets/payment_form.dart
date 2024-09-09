@@ -2,8 +2,22 @@ import 'package:book_bus_togo/core/utils/screen_size.dart';
 import 'package:book_bus_togo/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 
-class PaymentForm extends StatelessWidget {
+class PaymentForm extends StatefulWidget {
   const PaymentForm({super.key});
+
+  @override
+  State<PaymentForm> createState() => _PaymentFormState();
+}
+
+class _PaymentFormState extends State<PaymentForm> {
+
+  int _selectedPaymentMethod = 0;
+
+  void _handleRadioValueChange(int? value) {
+    setState(() {
+      _selectedPaymentMethod = value!;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,27 +31,42 @@ class PaymentForm extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Payez maintenant", style:  AppTheme().stylish1(17, AppTheme.primaryColor, isBold: true)),
+            Text("Choisissez votre methode de paiement et suivez les instructions", style:  AppTheme().stylish1(17, AppTheme.primaryColor, isBold: true)),
             SizedBox(height: context.heightPercent(5),),
-            _buildTextField(label: 'Numéro de carte'),
-            _buildTextField(label: 'Date d\'expiration'),
-            _buildTextField(label: 'CVV'),
+            RadioListTile(
+                  title: Row(
+                    children: [
+                      Image.asset('assets/tmoney.png', width: 100, height: 100),
+                      SizedBox(width: context.widthPercent(5)),
+                      Text('TMONEY',
+                          style: AppTheme().stylish1(15, AppTheme.black, isBold: true))
+                    ],
+                  ),
+                  value: 2,
+                  groupValue: _selectedPaymentMethod,
+                  onChanged: _handleRadioValueChange,
+                  controlAffinity: ListTileControlAffinity.trailing,
+                ),
+                Container(
+                    height: context.heightPercent(0.2), color: const Color.fromARGB(255, 206, 205, 205)),
+                RadioListTile(
+                  title: Row(
+                    children: [
+                      Image.asset('assets/flooz.png', width: 100, height: 100),
+                     SizedBox(width: context.widthPercent(5)),
+                      Text('FLOOZ',
+                          style: AppTheme().stylish1(15, AppTheme.black, isBold: true))
+                    ],
+                  ),
+                  value: 3,
+                  groupValue: _selectedPaymentMethod,
+                  onChanged: _handleRadioValueChange,
+                  controlAffinity: ListTileControlAffinity.trailing,
+                ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTextField({required String label}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: TextField(
-        decoration: InputDecoration(
-          
-          labelText: label,
-          border: const OutlineInputBorder(),
-        ),
-      ),
-    );
-  }
 }
