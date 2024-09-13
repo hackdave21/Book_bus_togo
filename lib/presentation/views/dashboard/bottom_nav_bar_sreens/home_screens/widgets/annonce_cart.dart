@@ -16,15 +16,55 @@ class AnnonceCart extends StatefulWidget {
 }
 
 class _AnnonceCartState extends State<AnnonceCart> {
-  bool isLoading = true; 
+
+  bool isLoading = true;
+  bool isLiked = false;
+  bool isDisliked = false;
+  int likes = 0;
+  int dislikes = 0;
+
   @override
   void initState() {
     super.initState();
+    // Initialisation des likes et dislikes avec les valeurs de l'annonce
+    likes = widget.annonce.likes;
+    dislikes = widget.annonce.dislikes;
 
-    Future.delayed(const Duration(seconds: 3), () {
+    // Simuler le chargement
+    Future.delayed(const Duration(seconds: 2), () {
       setState(() {
-        isLoading = false; 
+        isLoading = false;
       });
+    });
+  }
+
+  void toggleLike() {
+    setState(() {
+      if (isLiked) {
+        likes--; // Retirer le like
+      } else {
+        likes++; // Ajouter un like
+        if (isDisliked) {
+          dislikes--; // Enlever le dislike si déjà appliqué
+          isDisliked = false;
+        }
+      }
+      isLiked = !isLiked; // Inverser l'état de like
+    });
+  }
+
+  void toggleDislike() {
+    setState(() {
+      if (isDisliked) {
+        dislikes--; // Retirer le dislike
+      } else {
+        dislikes++; // Ajouter un dislike
+        if (isLiked) {
+          likes--; // Enlever le like si déjà appliqué
+          isLiked = false;
+        }
+      }
+      isDisliked = !isDisliked; // Inverser l'état de dislike
     });
   }
 
@@ -82,7 +122,7 @@ class _AnnonceCartState extends State<AnnonceCart> {
 
               SizedBox(height: context.heightPercent(3)),
 
-              Row(
+               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   isLoading
@@ -92,30 +132,33 @@ class _AnnonceCartState extends State<AnnonceCart> {
                           borderRadius: BorderRadius.circular(15),
                         )
                       : InkWell(
-                          onTap: () {},
+                          onTap: toggleLike,
                           child: Container(
                             width: context.widthPercent(40),
                             height: context.heightPercent(6),
                             decoration: BoxDecoration(
-                                color: AppTheme.primaryColor,
-                                borderRadius: BorderRadius.circular(15)),
+                              color: isLiked ? AppTheme.white : AppTheme.primaryColor,
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(color: AppTheme.primaryColor),
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  const HeroIcon(
+                                  HeroIcon(
                                     HeroIcons.handThumbUp,
-                                    color: AppTheme.white,
+                                    color: isLiked ? AppTheme.primaryColor : AppTheme.white,
                                   ),
-                                   Container(
+                                  Container(
                                     height: context.heightPercent(2),
                                     width: context.widthPercent(0.3),
-                                    color: AppTheme.white,
+                                   color: isLiked ? AppTheme.primaryColor : AppTheme.white,
                                   ),
-                                  Text(widget.annonce.likes.toString(),
+                                  Text(likes.toString(),
                                       style: AppTheme().stylish2(
-                                          15, AppTheme.white,
+                                          15,
+                                          isLiked ? AppTheme.primaryColor : AppTheme.white,
                                           isBold: true)),
                                 ],
                               ),
@@ -129,30 +172,33 @@ class _AnnonceCartState extends State<AnnonceCart> {
                           borderRadius: BorderRadius.circular(15),
                         )
                       : InkWell(
-                          onTap: () {},
+                          onTap: toggleDislike,
                           child: Container(
                             width: context.widthPercent(40),
                             height: context.heightPercent(6),
                             decoration: BoxDecoration(
-                                color: AppTheme.primaryColor,
-                                borderRadius: BorderRadius.circular(15)),
+                              color: isDisliked ? AppTheme.white : AppTheme.primaryColor,
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(color: AppTheme.primaryColor),
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  const HeroIcon(
+                                  HeroIcon(
                                     HeroIcons.handThumbDown,
-                                    color: AppTheme.white,
+                                    color: isDisliked ? AppTheme.primaryColor : AppTheme.white,
                                   ),
                                   Container(
                                     height: context.heightPercent(2),
                                     width: context.widthPercent(0.3),
-                                    color: AppTheme.white,
+                                    color:  isDisliked ? AppTheme.primaryColor : AppTheme.white,
                                   ),
-                                  Text(widget.annonce.dislikes.toString(),
+                                  Text(dislikes.toString(),
                                       style: AppTheme().stylish2(
-                                          15, AppTheme.white,
+                                          15,
+                                          isDisliked ? AppTheme.primaryColor : AppTheme.white,
                                           isBold: true)),
                                 ],
                               ),

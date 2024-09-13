@@ -1,4 +1,3 @@
-//import 'package:book_bus_togo/core/utils/screen_size.dart';
 import 'package:book_bus_togo/data/datasources/transport_company_data.dart';
 import 'package:book_bus_togo/presentation/views/dashboard/bottom_nav_bar_sreens/ticket_screens/widgets/ticket_card.dart';
 import 'package:book_bus_togo/themes/app_themes.dart';
@@ -11,6 +10,7 @@ class TicketScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppTheme.primaryColor,
@@ -45,22 +45,25 @@ class TicketScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: GridView.builder(
-                physics: const BouncingScrollPhysics(),
-        shrinkWrap: true,
+                physics: const BouncingScrollPhysics(
+                  decelerationRate: ScrollDecelerationRate.fast,
+                ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 8,
-                  childAspectRatio: 2 / 3,
+                  crossAxisCount: 2, // 2 items par ligne
+                  mainAxisSpacing: 6, // Espace entre les lignes
+                  crossAxisSpacing: 6, // Espace entre les colonnes
+                  childAspectRatio: 0.7, // Proportion de la carte (plus large ou plus haute)
                 ),
                 itemCount: transportCompanies.length,
                 itemBuilder: (context, index) {
-                  return TicketCard(transportCompany: transportCompanies[index]);
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TicketCard(transportCompany: transportCompanies[index]),
+                  );
                 },
               ),
             ),
           ),
-          
         ],
       ),
     );

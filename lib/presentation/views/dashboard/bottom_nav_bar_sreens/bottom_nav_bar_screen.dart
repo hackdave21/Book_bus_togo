@@ -40,11 +40,10 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.background,
+      backgroundColor: AppTheme.white,
       body: PageView(
         controller: _pageController,
         onPageChanged: _onPageChanged,
-        physics: const BouncingScrollPhysics(),
         children: const [
           HomeScreen(),
           TicketScreen(),
@@ -54,6 +53,8 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+        selectedLabelStyle: AppTheme().stylish1(16, AppTheme.primaryColor, isBold: true),
+        unselectedLabelStyle: AppTheme().stylish1(15, AppTheme.black),
         backgroundColor: AppTheme.white,
         selectedItemColor: AppTheme.primaryColor,
         unselectedItemColor: AppTheme.black.withOpacity(0.7),

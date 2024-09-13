@@ -3,10 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static const Color primaryColor = Color(0xFF003466);
-  static const Color background = Color(0xFFF0F3F4);
+ // static  Color background = Color.fromARGB(255, 113, 171, 225);
   static const Color inContainerColor = Color(0xFFCCCCCC);
   static const Color black = Colors.black;
-  static const Color white = Color.fromRGBO(255, 255, 255, 1);
+  static const Color white = Colors.white;
 
   static const String fontFamilyLato = "Lato";
   static const String fontFamilyQuick = "Quicksand";

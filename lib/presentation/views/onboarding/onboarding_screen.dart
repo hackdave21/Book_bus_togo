@@ -39,7 +39,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: AppTheme.background,
+        color: Colors.grey.shade100,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
