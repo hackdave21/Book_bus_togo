@@ -23,7 +23,7 @@ class _PaymentFormState extends State<PaymentForm> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
+                        color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(15),
                       ),
       child: Padding(
