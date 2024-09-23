@@ -32,4 +32,18 @@ final List<Map<String, dynamic>> usedTickets = [
     ),
     'reservationDate': DateTime.now().subtract(const Duration(days: 15)),
   },
+  {
+    'company': TransportCompany(
+      logoPath: 'assets/solimlogo.png',
+      name: 'SOLIM SEROU TRANSPORT',
+    ),
+    'reservationDate': DateTime.now().subtract(const Duration(days: 15)),
+  },
+  {
+    'company': TransportCompany(
+      logoPath: 'assets/solimlogo.png',
+      name: 'SOLIM SEROU TRANSPORT',
+    ),
+    'reservationDate': DateTime.now().subtract(const Duration(days: 15)),
+  },
 ];
