@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static const Color primaryColor = Color(0xFF003466);
- // static  Color background = Color.fromARGB(255, 113, 171, 225);
   static const Color inContainerColor = Color(0xFFCCCCCC);
   static const Color black = Colors.black;
   static const Color white = Colors.white;
@@ -32,4 +31,21 @@ class AppTheme {
       useMaterial3: true,
       primaryColor: primaryColor,
       fontFamily: fontFamilyQuick);
+}
+
+class BaseColors {
+  static const List<Color> grad1 = [
+    Colors.red,
+    Colors.orange,
+    Colors.yellow,
+    Colors.green,
+    Colors.blue,
+    Colors.purple,
+    Colors.pink
+  ];
+  static const List<Color> arcsColors = [
+    Colors.blue,
+    Colors.yellow,
+    Colors.red
+  ];
 }

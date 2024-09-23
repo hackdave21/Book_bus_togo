@@ -39,7 +39,6 @@ class PersonalInfoForm extends StatelessWidget {
                 child: Text("Numéro de téléphone", style:  AppTheme().stylish1(15, AppTheme.black, isBold: true)),
               ),
               _buildTextField(hintext: 'Ex. 90 90 90 90'),
-               _buildTextField(hintext: 'Ex. 90 90 90 90'),
               
             ],
           ),
