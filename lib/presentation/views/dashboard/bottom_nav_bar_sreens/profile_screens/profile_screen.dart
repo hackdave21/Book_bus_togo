@@ -215,7 +215,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       onTap: () {
                           Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  HistoricScreen()),
+                        MaterialPageRoute(builder: (context) => const TicketHistoryScreen()),
                       );
                       },
                     ),
