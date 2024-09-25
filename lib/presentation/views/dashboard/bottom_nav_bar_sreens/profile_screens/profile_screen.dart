@@ -31,68 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   XFile? _image;
   dynamic image;
   String img64 = "";
-
-  
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  String fullName = 'HACKERMAN Livai';
-  String phoneNumber = '+228 90 00 00 00';
-
-  Future<void> _editProfile() async {
-    _nameController.text = fullName;
-    _phoneController.text = phoneNumber;
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(
-            'Modifier profil',
-            style: AppTheme().stylish1(16, AppTheme.black, isBold: true),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: 'Nom complet',
-                  labelStyle: AppTheme().stylish1(15, AppTheme.black),
-                ),
-              ),
-              TextField(
-                controller: _phoneController,
-                decoration: InputDecoration(
-                    labelText: 'Numéro de téléphone',
-                    labelStyle: AppTheme().stylish1(15, AppTheme.black)),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child:
-                  Text('Annuler', style: AppTheme().stylish1(15, Colors.red)),
-            ),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  fullName = _nameController.text;
-                  phoneNumber = _phoneController.text;
-                });
-                Navigator.of(context).pop();
-              },
-              child: Text('Sauvegarder',
-                  style: AppTheme().stylish1(15, AppTheme.primaryColor)),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
- String balance = '10 000 XOF';
+  String balance = '10 000 XOF';
 
   @override
   void initState() {
@@ -110,10 +49,10 @@ class _ProfileScreenState extends State<ProfileScreen>
       isRefreshing = true;
     });
 
-    await Future.delayed(const Duration(seconds: 3)); // Simulate fetch
+    await Future.delayed(const Duration(seconds: 3));
 
     setState(() {
-      balance = '20 000 XOF'; // Set new balance
+      balance = '20 000 XOF'; 
       isRefreshing = false;
     });
   }
@@ -195,8 +134,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                     ),
                     IconButton(
                       onPressed: () {
-                        _controller.forward(from: 0); // Start rotation
-                        _refreshBalance(); // Refresh balance
+                        _controller.forward(from: 0);
+                        _refreshBalance();
                       },
                       icon: AnimatedBuilder(
                         animation: _rotationAnimation,

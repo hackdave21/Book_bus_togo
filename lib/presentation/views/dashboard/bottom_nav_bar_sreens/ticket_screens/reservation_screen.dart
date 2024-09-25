@@ -19,6 +19,7 @@ class ReservationScreen extends StatefulWidget {
 
 class _ReservationScreenState extends State<ReservationScreen> {
   int _currentStep = 1;
+  final GlobalKey<FormState> _personalInfoKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
           child: const HeroIcon(HeroIcons.arrowLeftCircle, color: AppTheme.white,),
         ),
         backgroundColor: AppTheme.primaryColor,
-        title: Text(widget.transportCompany.name, style: AppTheme().stylish1(18, AppTheme.white, isBold: true), ),
+        title: Text(widget.transportCompany.name, style: AppTheme().stylish1(18, AppTheme.white, isBold: true)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),
@@ -42,19 +43,23 @@ class _ReservationScreenState extends State<ReservationScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildStepContainer("1. Infos\nPersonnelles", _currentStep == 1, 1),
-                _buildStepContainer("2. Details du\nVoyage", _currentStep == 2, 2),
+                _buildStepContainer("2. Détails du\nVoyage", _currentStep == 2, 2),
                 _buildStepContainer("3. Paiement", _currentStep == 3, 3),
               ],
             ),
-             SizedBox(height:context.heightPercent(1)),
+            SizedBox(height: context.heightPercent(1)),
             Expanded(
               child: _buildForm(),
             ),
-             SizedBox(height:context.heightPercent(1)),
+            SizedBox(height: context.heightPercent(1)),
             NavigationButtons(
               showNext: _currentStep < 3,
               showPrev: _currentStep > 1,
               onNext: () {
+                if (_currentStep == 1 && !_personalInfoKey.currentState!.validate()) {
+                  // Si le formulaire n'est pas valide, affiche les erreurs
+                  return;
+                }
                 setState(() {
                   if (_currentStep < 3) _currentStep++;
                 });
@@ -99,13 +104,13 @@ class _ReservationScreenState extends State<ReservationScreen> {
   Widget _buildForm() {
     switch (_currentStep) {
       case 1:
-        return const PersonalInfoForm();
+        return PersonalInfoForm(key: _personalInfoKey);
       case 2:
         return const TravelDetailsForm();
       case 3:
         return const PaymentForm();
       default:
-        return const PersonalInfoForm();
+        return PersonalInfoForm(key: _personalInfoKey);
     }
   }
 }

@@ -26,7 +26,8 @@ class _TravelDetailsFormState extends State<TravelDetailsForm> {
           children: [
             Text(
               "Donnez les détails de votre voyage",
-              style: AppTheme().stylish1(15, AppTheme.primaryColor, isBold: true),
+              style:
+                  AppTheme().stylish1(15, AppTheme.primaryColor, isBold: true),
             ),
             SizedBox(height: context.heightPercent(1)),
             Row(
@@ -37,9 +38,11 @@ class _TravelDetailsFormState extends State<TravelDetailsForm> {
                     children: [
                       Text(
                         "Agence de départ",
-                        style: AppTheme().stylish1(15, AppTheme.black, isBold: true),
+                        style: AppTheme()
+                            .stylish1(15, AppTheme.black, isBold: true),
                       ),
-                      _buildDropdownField(hintext: 'Ville 1', items: ['Ville 1', 'Ville 2']),
+                      _buildDropdownField(
+                          hintext: 'Ville 1', items: ['Ville 1', 'Ville 2']),
                     ],
                   ),
                 ),
@@ -50,9 +53,11 @@ class _TravelDetailsFormState extends State<TravelDetailsForm> {
                     children: [
                       Text(
                         "Agence d'arrivée",
-                        style: AppTheme().stylish1(15, AppTheme.black, isBold: true),
+                        style: AppTheme()
+                            .stylish1(15, AppTheme.black, isBold: true),
                       ),
-                      _buildDropdownField(hintext: 'Ville 1', items: ['Ville 1', 'Ville 2']),
+                      _buildDropdownField(
+                          hintext: 'Ville 1', items: ['Ville 1', 'Ville 2']),
                     ],
                   ),
                 ),
@@ -85,11 +90,13 @@ class _TravelDetailsFormState extends State<TravelDetailsForm> {
                   children: [
                     Text(
                       "Prix total à payer: ",
-                      style: AppTheme().stylish1(15, AppTheme.primaryColor, isBold: true),
+                      style: AppTheme()
+                          .stylish1(15, AppTheme.primaryColor, isBold: true),
                     ),
                     Text(
                       "7 000 XOF",
-                      style: AppTheme().stylish1(15, AppTheme.primaryColor, isBold: true),
+                      style: AppTheme()
+                          .stylish1(15, AppTheme.primaryColor, isBold: true),
                     ),
                   ],
                 ),
@@ -104,11 +111,20 @@ class _TravelDetailsFormState extends State<TravelDetailsForm> {
                     children: [
                       Text(
                         "Jour de départ",
-                        style: AppTheme().stylish1(15, AppTheme.black, isBold: true),
+                        style: AppTheme()
+                            .stylish1(15, AppTheme.black, isBold: true),
                       ),
                       _buildDropdownField(
                         hintext: 'Lundi',
-                        items: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
+                        items: [
+                          'Lundi',
+                          'Mardi',
+                          'Mercredi',
+                          'Jeudi',
+                          'Vendredi',
+                          'Samedi',
+                          'Dimanche'
+                        ],
                       ),
                     ],
                   ),
@@ -120,7 +136,8 @@ class _TravelDetailsFormState extends State<TravelDetailsForm> {
                     children: [
                       Text(
                         "Heure de départ",
-                        style: AppTheme().stylish1(15, AppTheme.black, isBold: true),
+                        style: AppTheme()
+                            .stylish1(15, AppTheme.black, isBold: true),
                       ),
                       _buildDropdownField(
                         hintext: '6h',
@@ -139,34 +156,44 @@ class _TravelDetailsFormState extends State<TravelDetailsForm> {
                   'Bagages supplémentaires ?',
                   style: AppTheme().stylish1(15, AppTheme.black, isBold: true),
                 ),
-                Row(
+                Wrap(
+                  alignment: WrapAlignment.start,
+                  spacing: 10.0,
                   children: [
-                    Radio<String>(
-                      value: 'Oui',
-                      groupValue: selectedOption,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedOption = value;
-                        });
-                      },
+                    Row(
+                      children: [
+                        Radio<String>(
+                          value: 'Oui',
+                          groupValue: selectedOption,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedOption = value;
+                            });
+                          },
+                        ),
+                        Text('Oui',
+                            style: AppTheme()
+                                .stylish2(12, AppTheme.black, isBold: true)),
+                      ],
                     ),
-                    Text('Oui', style: AppTheme().stylish2(12, AppTheme.black, isBold: true)),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Radio<String>(
-                      value: 'Non',
-                      groupValue: selectedOption,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedOption = value;
-                        });
-                      },
+                    Row(
+                      children: [
+                        Radio<String>(
+                          value: 'Non',
+                          groupValue: selectedOption,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedOption = value;
+                            });
+                          },
+                        ),
+                        Text('Non',
+                            style: AppTheme()
+                                .stylish2(12, AppTheme.black, isBold: true)),
+                      ],
                     ),
-                    Text('Non', style: AppTheme().stylish2(12, AppTheme.black, isBold: true)),
                   ],
-                ),
+                )
               ],
             ),
           ],
@@ -175,7 +202,8 @@ class _TravelDetailsFormState extends State<TravelDetailsForm> {
     );
   }
 
-  Widget _buildDropdownField({required String hintext, required List<String> items}) {
+  Widget _buildDropdownField(
+      {required String hintext, required List<String> items}) {
     return DropdownButtonFormField<String>(
       dropdownColor: AppTheme.white,
       decoration: InputDecoration(
@@ -190,7 +218,9 @@ class _TravelDetailsFormState extends State<TravelDetailsForm> {
       items: items.map((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value, style: AppTheme().stylish1(15, AppTheme.primaryColor, isBold: true)),
+          child: Text(value,
+              style:
+                  AppTheme().stylish1(15, AppTheme.primaryColor, isBold: true)),
         );
       }).toList(),
       onChanged: (newValue) {},

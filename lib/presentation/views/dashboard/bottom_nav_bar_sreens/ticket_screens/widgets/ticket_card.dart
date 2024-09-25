@@ -40,7 +40,6 @@ class _TicketCardState extends State<TicketCard> {
           );
         },
         child: Container(
-          height: context.heightPercent(80),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
@@ -58,16 +57,14 @@ class _TicketCardState extends State<TicketCard> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(7),
+                  padding: const EdgeInsets.all(2),
                   child: isLoading
                       ? ShimmerWidget(
                           width: double.infinity,
-                          height: context.heightPercent(13), // Reduced height
+                          height: context.heightPercent(13), 
                           borderRadius: BorderRadius.circular(15),
                         )
-                      : Container(
-                          width: double.infinity,
-                          height: context.heightPercent(16),
+                      : Container(                        
                           decoration: BoxDecoration(
                             color: Colors.grey.shade100,
                             borderRadius: BorderRadius.circular(15),
@@ -79,8 +76,9 @@ class _TicketCardState extends State<TicketCard> {
                           ),
                         ),
                 ),
+                const Spacer(),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.all(2),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey.shade100,
@@ -93,47 +91,15 @@ class _TicketCardState extends State<TicketCard> {
                           child: isLoading
                               ? ShimmerWidget(
                                   width: context.widthPercent(80),
-                                  height: context.heightPercent(3),
+                                  height: context.heightPercent(6),
                                 )
                               : Text(
                                   widget.transportCompany.name,
                                   style:
-                                      AppTheme().stylish1(15, AppTheme.black),
+                                      AppTheme().stylish1(15, AppTheme.black, isBold: true),
                                   textAlign: TextAlign.center,
                                 ),
                         ),
-                        // SizedBox(height: context.heightPercent(1)),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(7),
-                        //   child: isLoading
-                        //       ? ShimmerWidget(
-                        //           width: double.infinity,
-                        //           height: context.heightPercent(6),
-                        //           borderRadius: BorderRadius.circular(15),
-                        //         )
-                        //       : InkWell(
-                        //           onTap: () {
-                        //             Navigator.push(
-                        //               context,
-                        //               MaterialPageRoute(builder: (context) => ReservationScreen(transportCompany: widget.transportCompany)),
-                        //             );
-                        //           },
-                        //           child: Container(
-                        //             width: double.infinity,
-                        //             height: context.heightPercent(6),
-                        //             decoration: BoxDecoration(
-                        //               color: AppTheme.primaryColor,
-                        //               borderRadius: BorderRadius.circular(15),
-                        //             ),
-                        //             child: Center(
-                        //               child: Text(
-                        //                 'Reserver',
-                        //                 style: AppTheme().stylish2(15, AppTheme.white, isBold: true),
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         ),
-                        // )
                       ],
                     ),
                   ),

@@ -23,28 +23,40 @@ class NavigationButtons extends StatelessWidget {
       children: [
         if (showPrev)
           Container(
-             width: context.widthPercent(30),
-        height: context.heightPercent(7),
-        decoration: BoxDecoration(
-          color: AppTheme.primaryColor,
-          borderRadius: BorderRadius.circular(15),
-        ),
+            width: context.widthPercent(30),
+            height: context.heightPercent(7),
+            decoration: BoxDecoration(
+              color: AppTheme.primaryColor,
+              borderRadius: BorderRadius.circular(15),
+            ),
             child: InkWell(
               onTap: onPrev,
-              child:  Center(child: Text('Précédent',  style:  AppTheme().stylish1(15, AppTheme.white, isBold: true))),
+              child: Center(
+                child: Text(
+                  'Précédent',
+                  style: AppTheme().stylish1(15, AppTheme.white, isBold: true),
+                ),
+              ),
             ),
-          ),
+          )
+        else
+         const Spacer(),
         if (showNext)
           Container(
-              width: context.widthPercent(30),
-        height: context.heightPercent(7),
-        decoration: BoxDecoration(
-          color: AppTheme.primaryColor,
-          borderRadius: BorderRadius.circular(15),
-        ),
+            width: context.widthPercent(30),
+            height: context.heightPercent(7),
+            decoration: BoxDecoration(
+              color: AppTheme.primaryColor,
+              borderRadius: BorderRadius.circular(15),
+            ),
             child: InkWell(
               onTap: onNext,
-              child:  Center(child: Text('Suivant', style: AppTheme().stylish1(15, AppTheme.white, isBold: true),)),
+              child: Center(
+                child: Text(
+                  'Suivant',
+                  style: AppTheme().stylish1(15, AppTheme.white, isBold: true),
+                ),
+              ),
             ),
           ),
       ],
