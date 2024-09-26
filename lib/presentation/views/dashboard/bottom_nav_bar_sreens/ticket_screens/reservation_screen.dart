@@ -19,7 +19,6 @@ class ReservationScreen extends StatefulWidget {
 
 class _ReservationScreenState extends State<ReservationScreen> {
   int _currentStep = 1;
-  final GlobalKey<FormState> _personalInfoKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +55,6 @@ class _ReservationScreenState extends State<ReservationScreen> {
               showNext: _currentStep < 3,
               showPrev: _currentStep > 1,
               onNext: () {
-                if (_currentStep == 1 && !_personalInfoKey.currentState!.validate()) {
-                  // Si le formulaire n'est pas valide, affiche les erreurs
-                  return;
-                }
                 setState(() {
                   if (_currentStep < 3) _currentStep++;
                 });
@@ -104,13 +99,13 @@ class _ReservationScreenState extends State<ReservationScreen> {
   Widget _buildForm() {
     switch (_currentStep) {
       case 1:
-        return PersonalInfoForm(key: _personalInfoKey);
+        return PersonalInfoForm();
       case 2:
         return const TravelDetailsForm();
       case 3:
         return const PaymentForm();
       default:
-        return PersonalInfoForm(key: _personalInfoKey);
+        return PersonalInfoForm();
     }
   }
 }
