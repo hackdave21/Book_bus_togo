@@ -5,15 +5,15 @@ import 'package:book_bus_togo/themes/app_themes.dart';
 class NavigationButtons extends StatelessWidget {
   final bool showNext;
   final bool showPrev;
-  final VoidCallback onNext;
-  final VoidCallback onPrev;
+  final VoidCallback? onNext; 
+  final VoidCallback? onPrev; 
 
   const NavigationButtons({
     super.key,
     this.showNext = false,
     this.showPrev = false,
-    required this.onNext,
-    required this.onPrev,
+    this.onNext, 
+    this.onPrev, 
   });
 
   @override
@@ -30,7 +30,7 @@ class NavigationButtons extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
             ),
             child: InkWell(
-              onTap: onPrev,
+              onTap: onPrev?.call, 
               child: Center(
                 child: Text(
                   'Précédent',
@@ -40,7 +40,7 @@ class NavigationButtons extends StatelessWidget {
             ),
           )
         else
-         const Spacer(),
+          const Spacer(),
         if (showNext)
           Container(
             width: context.widthPercent(30),
@@ -50,7 +50,7 @@ class NavigationButtons extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
             ),
             child: InkWell(
-              onTap: onNext,
+              onTap: onNext?.call,
               child: Center(
                 child: Text(
                   'Suivant',

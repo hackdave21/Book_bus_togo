@@ -1,4 +1,3 @@
-
 import 'package:book_bus_togo/data/datasources/annonce_data.dart';
 import 'package:book_bus_togo/presentation/views/dashboard/bottom_nav_bar_sreens/home_screens/widgets/annonce_cart.dart';
 import 'package:book_bus_togo/themes/app_themes.dart';
@@ -8,14 +7,12 @@ import 'package:heroicons/heroicons.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-    String _selectedFilter = 'Les plus récentes';
+  String _selectedFilter = 'Les plus récentes';
 
   void _showFilterDialog() {
     showDialog(
@@ -43,12 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           'Filtrer les annonces',
-                          style: AppTheme().stylish1(18, AppTheme.black, isBold: true),
+                          style: AppTheme()
+                              .stylish1(18, AppTheme.black, isBold: true),
                         ),
                         CircleAvatar(
                           backgroundColor: AppTheme.primaryColor,
                           child: IconButton(
-                            icon: const HeroIcon(HeroIcons.xMark, size: 25, color: AppTheme.white),
+                            icon: const HeroIcon(HeroIcons.xMark,
+                                size: 25, color: AppTheme.white),
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -119,7 +118,9 @@ class _HomeScreenState extends State<HomeScreen> {
         physics: const BouncingScrollPhysics(),
         itemCount: annonces.length,
         itemBuilder: (context, index) {
-          return  AnnonceCart(annonce: annonces[index],);
+          return AnnonceCart(
+            annonce: annonces[index],
+          );
         },
       ),
     );

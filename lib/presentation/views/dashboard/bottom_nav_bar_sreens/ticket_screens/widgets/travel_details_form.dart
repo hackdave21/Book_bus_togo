@@ -163,6 +163,7 @@ class _TravelDetailsFormState extends State<TravelDetailsForm> {
                     Row(
                       children: [
                         Radio<String>(
+                          activeColor: AppTheme.primaryColor,
                           value: 'Oui',
                           groupValue: selectedOption,
                           onChanged: (value) {
@@ -179,6 +180,7 @@ class _TravelDetailsFormState extends State<TravelDetailsForm> {
                     Row(
                       children: [
                         Radio<String>(
+                          activeColor: AppTheme.primaryColor,
                           value: 'Non',
                           groupValue: selectedOption,
                           onChanged: (value) {

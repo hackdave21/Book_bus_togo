@@ -8,7 +8,6 @@ import 'package:book_bus_togo/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 
-
 class ReservationScreen extends StatefulWidget {
   final TransportCompany transportCompany;
   const ReservationScreen({super.key, required this.transportCompany});
@@ -19,6 +18,7 @@ class ReservationScreen extends StatefulWidget {
 
 class _ReservationScreenState extends State<ReservationScreen> {
   int _currentStep = 1;
+  bool _isPersonalInfoValid = false; // Track if the form is valid
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +29,11 @@ class _ReservationScreenState extends State<ReservationScreen> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: const HeroIcon(HeroIcons.arrowLeftCircle, color: AppTheme.white,),
+          child: const HeroIcon(HeroIcons.arrowLeftCircle, color: AppTheme.white),
         ),
         backgroundColor: AppTheme.primaryColor,
-        title: Text(widget.transportCompany.name, style: AppTheme().stylish1(18, AppTheme.white, isBold: true)),
+        title: Text(widget.transportCompany.name,
+            style: AppTheme().stylish1(18, AppTheme.white, isBold: true)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),
@@ -51,20 +52,23 @@ class _ReservationScreenState extends State<ReservationScreen> {
               child: _buildForm(),
             ),
             SizedBox(height: context.heightPercent(1)),
-            NavigationButtons(
-              showNext: _currentStep < 3,
-              showPrev: _currentStep > 1,
-              onNext: () {
-                setState(() {
-                  if (_currentStep < 3) _currentStep++;
-                });
-              },
-              onPrev: () {
-                setState(() {
-                  if (_currentStep > 1) _currentStep--;
-                });
-              },
-            ),
+           NavigationButtons(
+  showNext: _currentStep < 3,
+  showPrev: _currentStep > 1,
+  onNext: (_isPersonalInfoValid || _currentStep != 1)
+      ? () {
+          setState(() {
+            if (_currentStep < 3) _currentStep++;
+          });
+        }
+      : null, // Set to null if invalid, avoiding nullable function issues
+  onPrev: () {
+    setState(() {
+      if (_currentStep > 1) _currentStep--;
+    });
+  },
+),
+
           ],
         ),
       ),
@@ -99,13 +103,19 @@ class _ReservationScreenState extends State<ReservationScreen> {
   Widget _buildForm() {
     switch (_currentStep) {
       case 1:
-        return PersonalInfoForm();
+        return PersonalInfoForm(
+          onFormValid: (isValid) {
+            setState(() {
+              _isPersonalInfoValid = isValid; // Update the form validity state
+            });
+          },
+        );
       case 2:
         return const TravelDetailsForm();
       case 3:
         return const PaymentForm();
       default:
-        return PersonalInfoForm();
+        return PersonalInfoForm(onFormValid: (_) {});
     }
   }
 }

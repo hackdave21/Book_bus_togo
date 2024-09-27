@@ -167,7 +167,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                 child: Column(
                   children: [
                      ListTile(
-                      leading: const HeroIcon(HeroIcons.language),
+                      iconColor: AppTheme.primaryColor,
+                      leading: const HeroIcon(HeroIcons.listBullet),
                       title: Text('Historique',
                           style:
                               AppTheme().stylish1(context.p1, AppTheme.black)),
@@ -187,6 +188,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                     ),
                     ListTile(
+                      iconColor: AppTheme.primaryColor,
                       leading: HeroIcon(isNotificationEnabled
                           ? HeroIcons.bellAlert
                           : HeroIcons.bellSlash),
@@ -207,6 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                     ),
                     ListTile(
+                      iconColor: AppTheme.primaryColor,
                       leading: const HeroIcon(HeroIcons.language),
                       title: Text('Langue',
                           style:
@@ -222,6 +225,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                     ),
                     ListTile(
+                      iconColor: AppTheme.primaryColor,
                       leading: const HeroIcon(HeroIcons.shieldCheck),
                       title: Text('Politique de confidentialité',
                           style:
@@ -237,6 +241,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                     ),
                     ListTile(
+                      iconColor: AppTheme.primaryColor,
                       leading: HeroIcon(
                           isDarkModeEnabled ? HeroIcons.moon : HeroIcons.sun),
                       title: Text('Mode sombre',
