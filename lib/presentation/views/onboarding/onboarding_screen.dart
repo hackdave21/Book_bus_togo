@@ -5,6 +5,7 @@ import 'package:book_bus_togo/presentation/views/dashboard/bottom_nav_bar_sreens
 import 'package:book_bus_togo/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -25,13 +26,13 @@ class _OnboardingScreenState extends State<OnboardingScreen>
 
     // Initialisation du contrôleur d'animation
     controller = AnimationController(
-      duration: const Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 350),
       vsync: this,
     )..repeat(reverse: true);
 
     // Délai avant la navigation vers BottomNavBarScreen
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 5), () {
+      Future.delayed(const Duration(seconds: 6), () {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const BottomNavBarScreen()),
@@ -40,7 +41,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     });
 
     // Changer showWelcomeText après 3 secondes
-    Timer(const Duration(seconds: 4), () {
+    Timer(const Duration(seconds: 5), () {
       setState(() {
         showWelcomeText = false;
       });
@@ -49,7 +50,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     // Ajout d'un listener pour gérer l'animation
     controller.addStatusListener((status) {
       if (status == AnimationStatus.reverse && count < 2) {
-        Future.delayed(const Duration(milliseconds: 250), () {
+        Future.delayed(const Duration(milliseconds: 350), () {
           if (mounted) {
             setState(() {
               count++;
@@ -74,7 +75,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:  Column(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Padding(
@@ -88,11 +89,21 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   height: 100,
                 ),
                 AppHelpers.getSpacerWidth(1),
-                Text(
-                  "BookBusTogo",
-                  style: AppTheme()
-                      .stylish1(29, AppTheme.primaryColor, isBold: true),
-                ),
+                Animate(
+                  effects: const [FadeEffect(), ScaleEffect()],
+                  child: Text(
+                    "BookBusTogo",
+                    style: AppTheme()
+                        .stylish1(29, AppTheme.primaryColor, isBold: true),
+                  ),
+                )
+                    .fade(
+                        duration: 2000
+                            .ms) // Ajout d'une durée plus longue pour l'effet de fondu
+                    .scale(
+                        delay: 2000.ms,
+                        duration: 1000
+                            .ms), // L'effet de mise à l'échelle démarre après l'effet de fondu
               ],
             ),
           ),
@@ -100,26 +111,27 @@ class _OnboardingScreenState extends State<OnboardingScreen>
             child: showWelcomeText
                 ? Text(
                     "Bienvenue",
-                    style: AppTheme().stylish2(15, AppTheme.primaryColor,
-                        isBold: true),
+                    style: AppTheme()
+                        .stylish2(15, AppTheme.primaryColor, isBold: true),
                   )
                 : SizedBox(
-                  height: context.heightPercent(10),
-                  child: Flow(
-                        delegate: FlowDotDelegate(animation: controller, count: count),
-                        children: List.generate(
-                          3,
-                          (index) => Container(
-                            height: 10,
-                            width: 10,
-                            decoration: const BoxDecoration(
-                              color: AppTheme.primaryColor,
-                              shape: BoxShape.circle,
-                            ),
+                    height: context.heightPercent(10),
+                    child: Flow(
+                      delegate:
+                          FlowDotDelegate(animation: controller, count: count),
+                      children: List.generate(
+                        3,
+                        (index) => Container(
+                          height: 10,
+                          width: 10,
+                          decoration: const BoxDecoration(
+                            color: AppTheme.primaryColor,
+                            shape: BoxShape.circle,
                           ),
-                        ).toList(),
-                              ),
-                ), 
+                        ),
+                      ).toList(),
+                    ),
+                  ),
           ),
         ],
       ),

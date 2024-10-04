@@ -1,14 +1,13 @@
-import 'dart:convert';
-import 'dart:io' as io;
+import 'dart:io';
 import 'package:book_bus_togo/core/utils/screen_size.dart';
 import 'package:book_bus_togo/core/utils/text_size.dart';
 import 'package:book_bus_togo/presentation/views/dashboard/bottom_nav_bar_sreens/profile_screens/settings/historic_screen.dart';
 import 'package:book_bus_togo/presentation/views/dashboard/shimmers/shimmers_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:image_picker/image_picker.dart';
 import '../../../../../themes/app_themes.dart';
-
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -21,17 +20,15 @@ class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
   bool isDarkModeEnabled = false;
   bool isNotificationEnabled = false;
-   bool isRefreshing = false;
+  bool isRefreshing = false;
   late final AnimationController _controller;
   late final Animation<double> _rotationAnimation;
   // ignore: unused_field
   final bool _isRotated = false;
- final String imageUrl = 'assets/pp.jpg';
-  // ignore: unused_field
-  XFile? _image;
-  dynamic image;
-  String img64 = "";
+  final String imageUrl = 'assets/pp.jpg';
   String balance = '10 000 XOF';
+  final ImagePicker _picker = ImagePicker();
+  File? _selectedImage;
 
   @override
   void initState() {
@@ -52,13 +49,81 @@ class _ProfileScreenState extends State<ProfileScreen>
     await Future.delayed(const Duration(seconds: 3));
 
     setState(() {
-      balance = '20 000 XOF'; 
+      balance = '20 000 XOF';
       isRefreshing = false;
     });
   }
 
-  @override
+  Future<void> _selectImageFromGallery() async {
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      _cropImage(pickedFile.path);
+    }
+  }
 
+  Future<void> _takePhoto() async {
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      _cropImage(pickedFile.path);
+    }
+  }
+
+  Future<void> _cropImage(String imagePath) async {
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: imagePath,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Recadrer la photo',
+          toolbarColor: Colors.deepOrange,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false,
+        ),
+        IOSUiSettings(
+          minimumAspectRatio: 1.0,
+        ),
+      ],
+    );
+
+    if (croppedFile != null) {
+      setState(() {
+        _selectedImage = File(croppedFile.path);
+      });
+    }
+  }
+
+  void _showImagePickerOptions() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Wrap(
+          children: <Widget>[
+            ListTile(
+              leading: const Icon(Icons.photo_library),
+              title: const Text('Choisir dans la galerie'),
+              onTap: () {
+                _selectImageFromGallery();
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_camera),
+              title: const Text('Prendre une photo'),
+              onTap: () {
+                _takePhoto();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.white,
@@ -69,92 +134,109 @@ class _ProfileScreenState extends State<ProfileScreen>
             SizedBox(height: context.heightPercent(5)),
 
 ////////////////////////////  Photo de profil ////////////////////////
-           Stack(
-      children: [
-        CircleAvatar(
-          radius: 50,
-          backgroundImage: NetworkImage(imageUrl),
-        ),
-        Positioned(
-          bottom: 0,
-          right: 0,
-          child: GestureDetector(
-            onTap:  () async {
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode());
-                                _showPicker(context);
-                              },
-            child: const CircleAvatar(
-              radius: 16,
-              backgroundColor: Colors.white,
-              child: Icon(
-                Icons.camera_alt,
-                size: 20,
-                color: AppTheme.primaryColor,
-              ),
+            Stack(
+              alignment: Alignment.center,
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  height: context.heightPercent(15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppTheme.primaryColor,
+                  ),
+                ),
+                Positioned(
+                  bottom: -context.heightPercent(5),
+                  child: Stack(
+                    children: [
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundImage: _selectedImage != null
+                            ? FileImage(_selectedImage!)
+                            : const AssetImage('assets/pp.jpg')
+                                as ImageProvider,
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: _showImagePickerOptions,
+                          child: const CircleAvatar(
+                            radius: 16,
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              Icons.camera_alt,
+                              size: 20,
+                              color: AppTheme.primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ),
-        ),
-      ],
-    ),
+
             SizedBox(height: context.heightPercent(10)),
 
 ////////////////////////////  Container du solde ////////////////////////
-              Container(
-                padding: EdgeInsets.symmetric(
-                    vertical: context.heightPercent(2),
-                    horizontal: context.heightPercent(2)),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: AppTheme.primaryColor,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Solde",
-                          style: AppTheme().stylish2(
-                              context.p2, AppTheme.white, isBold: true),
-                        ),
-                        isRefreshing
-                            ? const ShimmerWidget(
-                                width: 100,
-                                height: 20,
-                                borderRadius: BorderRadius.all(Radius.circular(15)),
-                              )
-                            : Text(
-                                balance,
-                                style: AppTheme().stylish2(
-                                    context.p2, AppTheme.white, isBold: true),
-                              ),
-                      ],
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        _controller.forward(from: 0);
-                        _refreshBalance();
-                      },
-                      icon: AnimatedBuilder(
-                        animation: _rotationAnimation,
-                        builder: (context, child) {
-                          return Transform.rotate(
-                            angle: _rotationAnimation.value,
-                            child: const HeroIcon(
-                              HeroIcons.arrowPath,
-                              color: Colors.white,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+            Container(
+              padding: EdgeInsets.symmetric(
+                  vertical: context.heightPercent(2),
+                  horizontal: context.heightPercent(2)),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: AppTheme.primaryColor,
               ),
- SizedBox(height: context.heightPercent(10)),
-
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Solde",
+                        style: AppTheme()
+                            .stylish2(context.p2, AppTheme.white, isBold: true),
+                      ),
+                      isRefreshing
+                          ? const ShimmerWidget(
+                              width: 100,
+                              height: 20,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                            )
+                          : Text(
+                              balance,
+                              style: AppTheme().stylish2(
+                                  context.p2, AppTheme.white,
+                                  isBold: true),
+                            ),
+                    ],
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      _controller.forward(from: 0);
+                      _refreshBalance();
+                    },
+                    icon: AnimatedBuilder(
+                      animation: _rotationAnimation,
+                      builder: (context, child) {
+                        return Transform.rotate(
+                          angle: _rotationAnimation.value,
+                          child: const HeroIcon(
+                            HeroIcons.arrowPath,
+                            color: Colors.white,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: context.heightPercent(10)),
 
 ////////////////////// Les paramètres et fonctionnalités ///////////////////////////////////////
             Container(
@@ -166,17 +248,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                 padding: EdgeInsets.all(context.heightPercent(2)),
                 child: Column(
                   children: [
-                     ListTile(
+                    ListTile(
                       iconColor: AppTheme.primaryColor,
                       leading: const HeroIcon(HeroIcons.listBullet),
                       title: Text('Historique',
                           style:
                               AppTheme().stylish1(context.p1, AppTheme.black)),
                       onTap: () {
-                          Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const TicketHistoryScreen()),
-                      );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const TicketHistoryScreen()),
+                        );
                       },
                     ),
                     Container(
@@ -257,7 +341,6 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
             ),
           ]),
-
         ),
       ),
     );
@@ -273,52 +356,5 @@ class _ProfileScreenState extends State<ProfileScreen>
     setState(() {
       isNotificationEnabled = value;
     });
-  }
-
-   onImageButtonPressed(ImageSource source,
-      {required BuildContext context}) async {
-    XFile? imageGetted =
-        await ImagePicker().pickImage(source: source, imageQuality: 50);
-
-    if (imageGetted != null) {
-      setState(() {
-        image = io.File(imageGetted.path);
-      });
-
-      final bytes = io.File(image.path).readAsBytesSync();
-
-      setState(() {
-        img64 = base64Encode(bytes);
-      });
-    }
-  }
-
-  void _showPicker(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return SafeArea(
-            child: Wrap(
-              children: <Widget>[
-                ListTile(
-                    leading: const Icon(Icons.photo_library),
-                    title: const Text('Téléverser une photo'),
-                    onTap: () {
-                      onImageButtonPressed(ImageSource.gallery,
-                          context: context);
-                      Navigator.of(context).pop();
-                    }),
-                ListTile(
-                  leading: const Icon(Icons.photo_camera),
-                  title: const Text('Camera'),
-                  onTap: () {
-                    onImageButtonPressed(ImageSource.camera, context: context);
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ),
-          );
-        });
   }
 }

@@ -65,11 +65,11 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.confirmation_number),
-            label: 'Ticket',
+            label: 'Tickets',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Profile',
+            label: 'Profil',
           ),
         ],
       ),
