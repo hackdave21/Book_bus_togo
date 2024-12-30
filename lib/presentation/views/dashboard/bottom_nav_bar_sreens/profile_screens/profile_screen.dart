@@ -1,57 +1,44 @@
 import 'dart:io';
 import 'package:book_bus_togo/core/utils/screen_size.dart';
 import 'package:book_bus_togo/core/utils/text_size.dart';
+import 'package:book_bus_togo/domain/useCases/profile_image_usecase.dart';
 import 'package:book_bus_togo/presentation/views/dashboard/bottom_nav_bar_sreens/profile_screens/settings/historic_screen.dart';
-import 'package:book_bus_togo/presentation/views/dashboard/shimmers/shimmers_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../themes/app_themes.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen>
+class _ProfileScreenState extends ConsumerState<ProfileScreen>
     with SingleTickerProviderStateMixin {
   bool isDarkModeEnabled = false;
   bool isNotificationEnabled = false;
-  bool isRefreshing = false;
-  late final AnimationController _controller;
-  late final Animation<double> _rotationAnimation;
-  // ignore: unused_field
-  final bool _isRotated = false;
-  final String imageUrl = 'assets/pp.jpg';
-  String balance = '10 000 XOF';
+
   final ImagePicker _picker = ImagePicker();
   File? _selectedImage;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 500),
-      vsync: this,
-    );
-    _rotationAnimation = Tween<double>(begin: 0, end: 2 * 3.141592653589793)
-        .animate(_controller);
+    _loadProfileImage();
   }
 
-  Future<void> _refreshBalance() async {
-    setState(() {
-      isRefreshing = true;
-    });
-
-    await Future.delayed(const Duration(seconds: 3));
-
-    setState(() {
-      balance = '20 000 XOF';
-      isRefreshing = false;
-    });
+  Future<void> _loadProfileImage() async {
+    final getProfileImageUseCase = ref.read(getProfileImageUseCaseProvider);
+    String? imagePath = await getProfileImageUseCase.execute();
+    if (imagePath != null) {
+      setState(() {
+        _selectedImage = File(imagePath);
+      });
+    }
   }
 
   Future<void> _selectImageFromGallery() async {
@@ -92,6 +79,9 @@ class _ProfileScreenState extends State<ProfileScreen>
       setState(() {
         _selectedImage = File(croppedFile.path);
       });
+      // Save the image using Riverpod
+      final saveProfileImageUseCase = ref.read(saveProfileImageUseCaseProvider);
+      await saveProfileImageUseCase.execute(croppedFile.path);
     }
   }
 
@@ -102,16 +92,30 @@ class _ProfileScreenState extends State<ProfileScreen>
         return Wrap(
           children: <Widget>[
             ListTile(
-              leading: const Icon(Icons.photo_library),
-              title: const Text('Choisir dans la galerie'),
+              leading: const Icon(
+                Icons.photo_library,
+                color: AppTheme.primaryColor,
+              ),
+              title: Text(
+                'Choisir dans la galerie',
+                style: AppTheme()
+                    .stylish1(15, AppTheme.primaryColor, isBold: true),
+              ),
               onTap: () {
                 _selectImageFromGallery();
                 Navigator.of(context).pop();
               },
             ),
             ListTile(
-              leading: const Icon(Icons.photo_camera),
-              title: const Text('Prendre une photo'),
+              leading: const Icon(
+                Icons.photo_camera,
+                color: AppTheme.primaryColor,
+              ),
+              title: Text(
+                'Prendre une photo',
+                style: AppTheme()
+                    .stylish1(15, AppTheme.primaryColor, isBold: true),
+              ),
               onTap: () {
                 _takePhoto();
                 Navigator.of(context).pop();
@@ -133,112 +137,40 @@ class _ProfileScreenState extends State<ProfileScreen>
           child: Column(children: <Widget>[
             SizedBox(height: context.heightPercent(5)),
 
-////////////////////////////  Photo de profil ////////////////////////
+            ////////////////////////////  Photo de profil ////////////////////////
             Stack(
-              alignment: Alignment.center,
-              clipBehavior: Clip.none,
               children: [
-                Container(
-                  height: context.heightPercent(15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: AppTheme.primaryColor,
-                  ),
+                CircleAvatar(
+                  radius: 50,
+                  backgroundImage: _selectedImage != null
+                      ? FileImage(_selectedImage!)
+                      : const AssetImage('assets/pp.jpg') as ImageProvider,
                 ),
                 Positioned(
-                  bottom: -context.heightPercent(5),
-                  child: Stack(
-                    children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: _selectedImage != null
-                            ? FileImage(_selectedImage!)
-                            : const AssetImage('assets/pp.jpg')
-                                as ImageProvider,
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: GestureDetector(
-                          onTap: _showImagePickerOptions,
-                          child: const CircleAvatar(
-                            radius: 16,
-                            backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.camera_alt,
-                              size: 20,
-                              color: AppTheme.primaryColor,
-                            ),
-                          ),
+                  bottom: 0,
+                  right: 0,
+                  child: GestureDetector(
+                    onTap: _showImagePickerOptions,
+                    child: Container(
+                      color:
+                          Colors.transparent, // Rendre le conteneur cliquable
+                      child: const CircleAvatar(
+                        radius: 16,
+                        backgroundColor: Colors.white,
+                        child: Icon(
+                          Icons.camera_alt,
+                          size: 20,
+                          color: AppTheme.primaryColor,
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ],
             ),
-
             SizedBox(height: context.heightPercent(10)),
 
-////////////////////////////  Container du solde ////////////////////////
-            Container(
-              padding: EdgeInsets.symmetric(
-                  vertical: context.heightPercent(2),
-                  horizontal: context.heightPercent(2)),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: AppTheme.primaryColor,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Solde",
-                        style: AppTheme()
-                            .stylish2(context.p2, AppTheme.white, isBold: true),
-                      ),
-                      isRefreshing
-                          ? const ShimmerWidget(
-                              width: 100,
-                              height: 20,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                            )
-                          : Text(
-                              balance,
-                              style: AppTheme().stylish2(
-                                  context.p2, AppTheme.white,
-                                  isBold: true),
-                            ),
-                    ],
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      _controller.forward(from: 0);
-                      _refreshBalance();
-                    },
-                    icon: AnimatedBuilder(
-                      animation: _rotationAnimation,
-                      builder: (context, child) {
-                        return Transform.rotate(
-                          angle: _rotationAnimation.value,
-                          child: const HeroIcon(
-                            HeroIcons.arrowPath,
-                            color: Colors.white,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: context.heightPercent(10)),
-
-////////////////////// Les paramètres et fonctionnalités ///////////////////////////////////////
+            ////////////////////// Les paramètres et fonctionnalités ///////////////////////////////////////
             Container(
               decoration: BoxDecoration(
                 color: Colors.grey.shade100,
